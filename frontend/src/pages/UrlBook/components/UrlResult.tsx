@@ -32,7 +32,6 @@ const UrlResult = () => {
                   {place.img ? (
                     <img src={place.img} alt={place.name} className="w-full h-full object-cover rounded-lg" />
                   ) : (
-                    // 이미지 경로 없으면 치이카와
                     <img src="https://www.namdokorea.com/site/jeonnam/tour/images/noimage.gif" alt={place.name} className="w-full h-full object-cover rounded-lg" />
                   )}                  
                   <div className="mt-2 text-sm font-semibold line-clamp-1">{place.name}</div>
