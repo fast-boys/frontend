@@ -14,6 +14,9 @@ interface UrlStore {
   addUrl: (url: string ) => void; // Modify the type of newUrl parameter
   addUrls: (urls: string[]) => void; // 한번에 urls만들어서 렌더링
   deleteCheckedUrls: () => void;
+  selectAllUrls: () => void,
+  unSelectAllUrls: () => void,
+  
   // asd: string;
 }
 
@@ -52,7 +55,21 @@ export const useUrlStore = create<UrlStore>((set) => ({
       urls: state.urls.filter((item) => !item.checked),
     }));
   },
+
+  selectAllUrls: () => {
+    set((state) => ({
+      urls: state.urls.map((url) => ({ ...url, checked: true })),
+    }));
+  },
+
+  unSelectAllUrls: () => {
+    set((state) => ({
+      urls: state.urls.map((url) => ({ ...url, checked: false })),
+    }));
+  },
+
 }));
+
 
 
 // 더미 데이터를 가져와서 store에 추가하는 코드

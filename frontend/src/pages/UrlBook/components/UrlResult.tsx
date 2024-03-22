@@ -16,6 +16,7 @@ const UrlResult = () => {
     fetchData();
   }, []);
 
+  //수정: URL을 KEY값으로 쓰는데 중복막아햐하지않을까?
   return (
     <div className="bg-white rounded-lg overflow-hidden mr-4">
       <div className="p-4">

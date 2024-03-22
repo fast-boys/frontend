@@ -11,7 +11,7 @@ export interface UrlDummyResult {
 }
   
 const dummyData: UrlDummyResult = {
-  "URL1": [
+  "OG TITLE 1": [ // 오픈그래프를 서버에서 처리해서 넘겨준다면
     {
       "name": "무릉 자전거 도로(환상자전거길 3구간)",
       "address": "제주특별자치도 제주시 구좌읍 구좌해안로 237",
@@ -63,7 +63,7 @@ const dummyData: UrlDummyResult = {
       "img": "http://tong.visitkorea.or.kr/cms/resource/13/2783913_image2_1.jpg"
     }
   ],
-  "URL2": [
+  "OG TITLE 2": [
     {
       "img": "https://www.gyeongju.go.kr/upload/content/thumb/20200629/9370955557CC4DA48BAA73BD4F75526A.jpg",
       "name": "동궁과 월지",
@@ -95,7 +95,7 @@ const dummyData: UrlDummyResult = {
       "address": "대한민국 서울"
     }
   ],
-  "URL3": [
+  "OG TITLE 3": [
     {
       "img": "https://www.gyeongju.go.kr/upload/content/thumb/20200629/9370955557CC4DA48BAA73BD4F75526A.jpg",
       "name": "동궁과 월지",
