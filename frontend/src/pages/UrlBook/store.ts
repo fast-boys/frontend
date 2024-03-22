@@ -1,6 +1,6 @@
 // src/pages/UrlBook/store.ts
 import { create } from 'zustand';
-import { fetchUrls } from 'src/apis/urlDummy';
+import { fetchUrls } from 'src/pages/UrlBook/dummyData/urlDummy';
 import { useEffect } from 'react';
 
 export interface UrlItem {

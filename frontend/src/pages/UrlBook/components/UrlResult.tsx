@@ -1,7 +1,7 @@
 // src/pages/UrlBook/components/UrlResult.tsx
 
 import { useEffect, useState } from 'react';
-import { fetchUrlResults, UrlDummyResult, PlaceInfo } from 'src/apis/urlDummyResult';
+import { fetchUrlResults, UrlDummyResult, PlaceInfo } from 'src/pages/UrlBook/dummyData/urlDummyResult';
 import { Link } from 'react-router-dom'; // react-router-dom에서 Link 가져오기
 
 const UrlResult = () => {
@@ -24,16 +24,16 @@ const UrlResult = () => {
           <Link to="/urlbook" className="text-sm text-blue-500 hover:underline">Back To Url</Link>
         </div>
         {urlData && Object.entries(urlData).map(([urlKey, places], sectionIndex) => (
-          <div key={sectionIndex} className="mb-8">
+          <div key={sectionIndex} className="mb-2">
             <h3 className="text-lg font-semibold mb-3">{urlKey.replace('URL', 'URL ')}</h3>
-            <div className="flex pb-8">
+            <div className="flex pb-12 overflow-x-auto">
               {places.map((place: PlaceInfo, index: number) => (
                 <div key={index} className="flex-shrink-0 w-24 h-24 mr-4">
                   {place.img ? (
                     <img src={place.img} alt={place.name} className="w-full h-full object-cover rounded-lg" />
                   ) : (
                     // 이미지 경로 없으면 치이카와
-                    <img src="https://i.namu.wiki/i/m8e8K3NhfVTpW-2bFpvCp9d3-KoxpNgPEuIxYWoneetKejAvKc1zOehj4lfkkZsiFcdPcxKMhG_Vz12htiZCEtHh_OPlQJNvJMkiniz_bJDbcSghm7XUTwYt_v3HY_5rSVhraXzR-oN5xTi-D22izQ.webp" alt={place.name} className="w-full h-full object-cover rounded-lg" />
+                    <img src="https://www.namdokorea.com/site/jeonnam/tour/images/noimage.gif" alt={place.name} className="w-full h-full object-cover rounded-lg" />
                   )}                  
                   <div className="mt-2 text-sm font-semibold line-clamp-1">{place.name}</div>
                   <div className="text-xs text-gray-500 line-clamp-1">{place.address}</div>

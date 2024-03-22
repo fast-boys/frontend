@@ -1,7 +1,7 @@
 // src/pages/UrlBook/hooks/useFetchUrls.ts
 
 import { useEffect } from 'react';
-import { fetchUrls } from 'src/apis/urlDummy';
+import { fetchUrls } from 'src/pages/UrlBook/dummyData/urlDummy';
 import { useUrlStore } from '../store';
 
 const useFetchUrls = () => {

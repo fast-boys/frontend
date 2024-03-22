@@ -6,6 +6,8 @@ const UrlAddModal: React.FC<{ doCloseModal: () => void }> = ({ doCloseModal }) =
   // const [memo, setMemo] = useState('');
   const [url, setUrl] = useState(''); // Add this line
   const addUrl = useUrlStore((state) => state.addUrl);
+  const [isInvalidUrl, setIsInvalidUrl] = useState(false); // URL 유효성 검사 결과를 저장할 상태 변수 추가
+
 
   const urlInputRef = useRef<HTMLTextAreaElement>(null); // textarea 엘리먼트에 대한 참조 생성
 
@@ -16,10 +18,35 @@ const UrlAddModal: React.FC<{ doCloseModal: () => void }> = ({ doCloseModal }) =
     }
   }, []); // []로 빈 배열을 전달하여 한 번만 실행되도록 설정
 
-  const handleSubmit = () => {
-    addUrl(url);
-    doCloseModal();
+
+  const isValidUrl = (urlString: string) => {
+    const pattern = new RegExp('^(https?:\\/\\/)?' + // 프로토콜
+                               '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // 도메인명
+                               '((\\d{1,3}\\.){3}\\d{1,3}))' + // 혹은 ip (v4) 주소
+                               '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // 포트와 경로
+                               '(\\?[;&a-z\\d%_.~+=-]*)?' + // 쿼리 파라미터
+                               '(\\#[-a-z\\d_]*)?$', 'i'); // 해시
+    return !!pattern.test(urlString);
   };
+
+
+
+  const handleSubmit = () => {
+    let formattedUrl = url;
+    // URL이 'https://'로 시작하지 않으면 앞에 추가
+    if (!formattedUrl.startsWith('https://')) {
+      formattedUrl = `https://${formattedUrl}`;
+    }
+  
+    // 수정된 URL이 유효한지 검사
+    if (isValidUrl(formattedUrl)) {
+      addUrl(formattedUrl); // 유효하면 수정된 URL을 추가
+      doCloseModal();
+    } else {
+      setIsInvalidUrl(true); // 유효하지 않으면 경고 메시지를 표시
+    }
+  };
+  
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -42,8 +69,13 @@ const UrlAddModal: React.FC<{ doCloseModal: () => void }> = ({ doCloseModal }) =
               value={url}
               onKeyDown={handleKeyDown}
               rows={1}
-              onChange={(e) => setUrl(e.target.value)}
+              onChange={(e) => {
+                setUrl(e.target.value);
+                setIsInvalidUrl(false); // 사용자가 입력을 변경하면 경고 메시지를 숨깁니다.
+              }}
             />
+            {isInvalidUrl && <p className="text-red-500">올바른 URL 주소가 아닙니다.</p>}
+
           </div>
 
           <div className='flex justify-center'>

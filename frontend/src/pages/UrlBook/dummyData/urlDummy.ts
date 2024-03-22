@@ -7,8 +7,9 @@ export interface UrlData {
 // 형식 지정해주고 맞는 데이터 설정
 // const urlData: UrlData[] = [ // 이건 리스트 형태가 아님
 const urlData: string[] = [
-  'https://blog.naver.com/davi-kim/223147828181',
+  'https://chuimi-life.tistory.com/entry/%EC%A0%9C%EC%A3%BC%EC%97%AC%ED%96%89-%EC%A0%9C%EC%A3%BC%EB%8F%84-%EC%9E%90%EC%9C%A0%EC%97%AC%ED%96%89-1%ED%83%84',
   'https://love1977.tistory.com/178', 
+  'https://wivern.tistory.com/21'
 ];
   
 
