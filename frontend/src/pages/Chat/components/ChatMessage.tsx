@@ -1,3 +1,5 @@
+// src/pages/Chat/components/ChatMessage.tsx
+
 import React from 'react'
 import { ChatMessage as ChatMessageType } from '../dummy/ChatDummyData'
 
@@ -30,6 +32,16 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
 	const showTime = !isNextSameUserAndTime
 
 	const profileImagePath = `src/assets/profileImage/${message.profileImage}`
+
+	const formatTime = (timestamp: string): string => {
+		const date = new Date(timestamp)
+		const hours = date.getHours()
+		const minutes = date.getMinutes()
+		const ampm = hours >= 12 ? '오후' : '오전'
+		const formattedHours = hours % 12 === 0 ? 12 : hours % 12
+		const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes
+		return `${ampm} ${formattedHours}:${formattedMinutes}`
+	}
 
 	return (
 		<div
@@ -79,7 +91,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
 						<div
 							className={`text-xs font-light text-gray-400 mx-2 whitespace-no-wrap`}
 						>
-							{message.timestamp.replace(/ /g, '\u00a0')}
+							{formatTime(message.timestamp)}
 						</div>
 					)}
 				</div>

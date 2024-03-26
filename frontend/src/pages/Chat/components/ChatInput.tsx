@@ -14,7 +14,6 @@ const ChatInput: React.FC = () => {
 		if (input.trim()) {
 			addMessage('User', input)
 			setInput('')
-			// scrollToBottom() // 필요가 없는뎅 useEffect로 Cha
 		}
 	}
 
@@ -37,7 +36,7 @@ const ChatInput: React.FC = () => {
 		document.getElementById('image-upload')!.click()
 	}
 
-  const triggerVideoInput = () => {
+	const triggerVideoInput = () => {
 		document.getElementById('media-upload')!.click()
 	}
 
@@ -58,10 +57,10 @@ const ChatInput: React.FC = () => {
 		const file = event.target.files?.[0]
 		if (file) {
 			// 비디오 파일 크기나 타입을 검사하는 로직을 여기에 추가할 수 있습니다.
-      if (file.size > 1000000) {
-        alert('비디오 파일은 1MB 이하로 제한됩니다.');
-        return; // 파일 크기가 1MB를 초과하면 여기서 함수 종료
-    }
+			if (file.size > 1000000) {
+				alert('비디오 파일은 1MB 이하로 제한됩니다.')
+				return // 파일 크기가 1MB를 초과하면 여기서 함수 종료
+			}
 			const reader = new FileReader()
 			reader.onload = () => {
 				// 파일 읽기 성공 시, 비디오 URL로 메시지 추가
@@ -98,7 +97,7 @@ const ChatInput: React.FC = () => {
 			{isModalOpen && (
 				<ChatFunctionModal
 					onImageSend={triggerImageInput}
-          onVideoSend={triggerVideoInput}
+					onVideoSend={triggerVideoInput}
 					closeModal={closeModal}
 				/>
 			)}

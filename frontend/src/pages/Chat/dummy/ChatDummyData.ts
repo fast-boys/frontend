@@ -8,7 +8,6 @@ export interface ChatMessage {
 	timestamp: string
 	type: string // 'type' 속성 추가
 }
-
 export const chatDummyData: ChatMessage[] = [
 	{
 		id: 1,
@@ -16,7 +15,7 @@ export const chatDummyData: ChatMessage[] = [
 		content:
 			'여행을 좋아한다면 추천하는 장소! 여행을 좋아한다면 추천하는 장소! 여행을 좋아한다면 추천하는 장소!',
 		profileImage: 'chiikawa.png',
-		timestamp: '오후 12:12',
+		timestamp: '2024-03-26T12:12:00',
 		type: 'text',
 	},
 	{
@@ -24,7 +23,7 @@ export const chatDummyData: ChatMessage[] = [
 		sender: 'User1',
 		content: '사진을 보여드릴게요.',
 		profileImage: 'chiikawa.png',
-		timestamp: '오후 12:15',
+		timestamp: '2024-03-26T12:15:00',
 		type: 'text',
 	},
 	{
@@ -32,7 +31,7 @@ export const chatDummyData: ChatMessage[] = [
 		sender: 'User',
 		content: '사진!!',
 		profileImage: 'chiikawa.png',
-		timestamp: '오후 12:15',
+		timestamp: '2024-03-26T12:15:00',
 		type: 'text',
 	},
 	{
@@ -41,7 +40,7 @@ export const chatDummyData: ChatMessage[] = [
 		content:
 			'사진!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!',
 		profileImage: 'chiikawa.png',
-		timestamp: '오후 12:15',
+		timestamp: '2024-03-26T12:15:00',
 		type: 'text',
 	},
 	{
@@ -49,7 +48,7 @@ export const chatDummyData: ChatMessage[] = [
 		sender: 'User1',
 		content: 'src/assets/profileImage/chiikawa.png',
 		profileImage: 'chiikawa.png',
-		timestamp: '오후 12:15',
+		timestamp: '2024-03-26T12:15:00',
 		type: 'image',
 	},
 	{
@@ -57,7 +56,7 @@ export const chatDummyData: ChatMessage[] = [
 		sender: 'User2',
 		content: '아따 마 좋네요.',
 		profileImage: 'hachiware.png',
-		timestamp: '오후 12:20',
+		timestamp: '2024-03-26T12:20:00',
 		type: 'text',
 	},
 	{
@@ -65,7 +64,7 @@ export const chatDummyData: ChatMessage[] = [
 		sender: 'User2',
 		content: '함',
 		profileImage: 'hachiware.png',
-		timestamp: '오후 12:20',
+		timestamp: '2024-03-26T12:20:00',
 		type: 'text',
 	},
 	{
@@ -73,7 +72,7 @@ export const chatDummyData: ChatMessage[] = [
 		sender: 'User2',
 		content: '가보겠심다.',
 		profileImage: 'hachiware.png',
-		timestamp: '오후 12:21',
+		timestamp: '2024-03-26T12:21:00',
 		type: 'text',
 	},
 	{
@@ -81,7 +80,7 @@ export const chatDummyData: ChatMessage[] = [
 		sender: 'User',
 		content: 'audio-url-here',
 		profileImage: 'user.jpg',
-		timestamp: '오후 12:21',
+		timestamp: '2024-03-26T12:21:00',
 		type: 'audio',
 	},
 	{
@@ -89,7 +88,7 @@ export const chatDummyData: ChatMessage[] = [
 		sender: 'User',
 		content: '야이야이야 야이야이야',
 		profileImage: 'User.jpg',
-		timestamp: '오후 12:22',
+		timestamp: '2024-03-26T12:22:00',
 		type: 'text',
 	},
 	{
@@ -97,7 +96,7 @@ export const chatDummyData: ChatMessage[] = [
 		sender: 'User1',
 		content: '꼭 가 당장 가',
 		profileImage: 'chiikawa.png',
-		timestamp: '오후 12:24',
+		timestamp: '2024-03-27T12:24:00',
 		type: 'text',
 	},
 	{
@@ -105,7 +104,7 @@ export const chatDummyData: ChatMessage[] = [
 		sender: 'User',
 		content: 'https://m.blog.naver.com/qkrdbwjd1717/221637966057',
 		profileImage: 'User.jpg',
-		timestamp: '오후 12:30',
+		timestamp: '2024-03-27T12:30:00',
 		type: 'text',
 	},
 	{
@@ -113,17 +112,17 @@ export const chatDummyData: ChatMessage[] = [
 		sender: 'User',
 		content: '텍스트 텍스트',
 		profileImage: 'User.jpg',
-		timestamp: '오후 12:31',
-		type: ' text',
+		timestamp: '2024-03-27T12:31:00',
+		type: 'text',
 	},
 	{
 		id: 14,
 		sender: 'User',
 		content: '감사합니당! 가볼게용!',
 		profileImage: 'User.jpg',
-		timestamp: '오후 12:31',
+		timestamp: '2024-03-27T12:31:00',
 		type: 'text',
 	},
-]
+];
 
 export default chatDummyData

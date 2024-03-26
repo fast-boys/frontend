@@ -1,3 +1,5 @@
+// src/pages/Chat/components/ChatList.tsx
+
 import React, { useEffect, useRef } from 'react'
 import { useChatStore } from '../store'
 import ChatMessage from './ChatMessage'
@@ -11,24 +13,52 @@ const ChatList: React.FC = () => {
 	// 텀 두면 되긴 하는데 자연스럽지 않구만..
 	useEffect(() => {
 		if (chatListRef.current) {
-			chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
+			chatListRef.current.scrollTop = chatListRef.current.scrollHeight
 			setTimeout(() => {
 				if (chatListRef.current) {
-					chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
+					chatListRef.current.scrollTop = chatListRef.current.scrollHeight
 				}
-			}, 0.0001);
+			}, 0.0001)
 		}
-	}, [messages]);
+	}, [messages])
+
+	const isDifferentDay = (currentMessageIndex: number): boolean => {
+		if (currentMessageIndex === 0) {
+			return true
+		}
+		const currentDate = new Date(messages[currentMessageIndex].timestamp)
+		const previousDate = new Date(messages[currentMessageIndex - 1].timestamp)
+		return currentDate.getDate() !== previousDate.getDate()
+	}
+
 	return (
-		// 채팅 리스트의 ref를 여기에 연결합니다.
-		<div ref={chatListRef} className="px-3 overflow-y-auto" style={{ height: '520px' }}>
+		<div
+			ref={chatListRef}
+			className="px-3 overflow-y-auto"
+			style={{ height: '520px' }}
+		>
 			{messages.map((message, index) => (
-				<ChatMessage
-					key={message.id}
-					message={message}
-					previousMessage={index > 0 ? messages[index - 1] : null}
-					nextMessage={index < messages.length - 1 ? messages[index + 1] : null}
-				/>
+				<React.Fragment key={message.id}>
+					{/* 현재 메시지와 이전 메시지의 날짜가 다른 경우, 날짜 변경선 추가 */}
+					{isDifferentDay(index) && (
+						<div className="text-center text-gray-500 mt-6 text-sm">
+							{new Date(message.timestamp).toLocaleDateString(undefined, {
+								weekday: 'long',
+								year: 'numeric',
+								month: 'long',
+								day: 'numeric',
+							})}
+						</div>
+					)}
+					{/* 채팅 메시지 출력 */}
+					<ChatMessage
+						message={message}
+						previousMessage={index > 0 ? messages[index - 1] : null}
+						nextMessage={
+							index < messages.length - 1 ? messages[index + 1] : null
+						}
+					/>
+				</React.Fragment>
 			))}
 		</div>
 	)
