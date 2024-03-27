@@ -12,7 +12,8 @@ const ChatInput: React.FC = () => {
 	// 메시지 전송 이벤트
 	const handleSend = () => {
 		if (input.trim()) {
-			addMessage('User', input)
+			//수정: 여기 Sender, userId는 백에서 받아온거 바로 넣어야 함 로그인 정보로 넣을까~?
+			addMessage('User000000', input)
 			setInput('')
 		}
 	}
@@ -110,9 +111,9 @@ const ChatInput: React.FC = () => {
 			/>
 			<input
 				type="file"
+				accept="video/*" // 비디오 파일만 선택하도록 변경
 				id="media-upload" // ID를 변경하여 이미지와 구분할 수 있도록 함
 				style={{ display: 'none' }}
-				accept="video/*" // 비디오 파일만 선택하도록 변경
 				onChange={handleMediaSelect} // 파일 선택 시 처리할 이벤트 핸들러 변경
 			/>
 		</div>

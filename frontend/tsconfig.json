@@ -30,6 +30,6 @@
 		}
 		// "baseUrl": "./"
 	},
-	"include": ["src", "**/*.ts", "**/*.tsx"],
+	"include": ["src", "**/*.ts", "**/*.tsx", "src/pages/Chat/socket.io-mock.d.ts" ], // socket.io-mock
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

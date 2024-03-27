@@ -1,11 +1,13 @@
-// src/store/index.ts
+// src/pages/Chat/store.ts
 
 import { create } from 'zustand'
-import { ChatMessage, chatDummyData } from './dummy/ChatDummyData' // chatDummyData를 import합니다.
+import { ChatMessageType, chatDummyData } from './dummy/ChatDummyData'
+import SocketMock from 'socket.io-mock'
 
+const socket = new SocketMock()
 interface ChatStore {
-	messages: ChatMessage[] // messages의 타입을 chatDummyData의 타입으로 설정합니다.
-	addMessage: (sender: string, content: string, type?: string) => void // type은 선택적으로. 생략 가능
+	messages: ChatMessageType[] // messages의 타입을 chatDummyData의 타입으로 설정합니다.
+	addMessage: (userId: string, content: string, type?: string) => void // type은 선택적으로. 생략 가능
 	deleteMessage: (id: number) => void
 }
 
@@ -17,20 +19,29 @@ const getTimeStamp = (): string => {
 
 export const useChatStore = create<ChatStore>((set) => ({
 	messages: chatDummyData,
-	addMessage: (sender, content, type = 'text') =>
-		set((state) => ({
-			messages: [
-				...state.messages,
-				{
-					id: state.messages.length + 1,
-					sender,
-					content,
-					profileImage: 'default.jpg',
-					timestamp: getTimeStamp(), // 이 부분을 수정하여 올바른 시간을 설정합니다.
-					type,
+	addMessage: (userId, content, type = 'text') =>
+		set((state) => {
+
+			// 로그인중인 유저 getCurrentUser 대신
+			// const currentuser = { nickname: 'user', profileImage: 'NoImage.png' }
+
+			const newMessage = {
+				id: state.messages.length + 1,
+				user: {
+					userId,
+					nickname: 'User', //수정: 실제 사용 시 서버에서 가져온 값을 사용
+					profileImage: 'default.jpg', // 실제 사용 시 서버에서 가져온 값을 사용
 				},
-			],
-		})),
+				content,
+				timestamp: getTimeStamp(),
+				type,
+			}
+			// 새 메시지를 상태에 추가하고, 소켓을 통해 전송합니다.
+			socket.socketClient.emit('message', newMessage)
+			return {
+				messages: [...state.messages, newMessage],
+			}
+		}),
 	deleteMessage: (id) =>
 		set((state) => ({
 			messages: state.messages.filter((message) => message.id !== id),

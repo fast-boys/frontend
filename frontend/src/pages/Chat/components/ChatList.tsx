@@ -2,15 +2,30 @@
 
 import React, { useEffect, useRef } from 'react'
 import { useChatStore } from '../store'
+import { ChatMessageType } from '../dummy/ChatDummyData'
+import socket from '../socketMock'
 import ChatMessage from './ChatMessage'
 
 const ChatList: React.FC = () => {
 	const messages = useChatStore((state) => state.messages)
-	const chatListRef = useRef<HTMLDivElement>(null) // 채팅 리스트를 위한 ref
+	const chatListRef = useRef<HTMLDivElement>(null)
 
-	//수정: 메시지 목록이 변경될 때마다 실행
-	// 사진 보내면 로딩되기 전에 이동하려고 해서 상단만 보임
-	// 텀 두면 되긴 하는데 자연스럽지 않구만..
+	useEffect(() => {
+		// message는 ChatMessageType 타입입니다.
+		const handleNewMessage = (message: ChatMessageType) => {
+			// 메시지 추가 함수에 필요한 값만 전달합니다.
+			useChatStore
+				.getState()
+				.addMessage(message.user.userId, message.content, message.type)
+		}
+
+		socket.socketClient.on('message', handleNewMessage)
+
+		return () => {
+			socket.socketClient.off('message', handleNewMessage)
+		}
+	}, [])
+	
 	useEffect(() => {
 		if (chatListRef.current) {
 			chatListRef.current.scrollTop = chatListRef.current.scrollHeight

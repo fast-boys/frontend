@@ -1,7 +1,7 @@
 // src/pages/Chat/components/ChatMessage.tsx
 
 import React from 'react'
-import { ChatMessage as ChatMessageType } from '../dummy/ChatDummyData'
+import { ChatMessageType } from '../dummy/ChatDummyData';
 
 interface ChatMessageProps {
 	message: ChatMessageType
@@ -14,24 +14,35 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
 	previousMessage,
 	nextMessage,
 }) => {
-	const isUserMessage = message.sender === 'User'
+	const formatTimeForComparison = (timestamp: string): string => {
+		const date = new Date(timestamp)
+		const days = date.getDay()
+		const hours = date.getHours()
+		const minutes = date.getMinutes()
+		const ampm = hours >= 12 ? '오후' : '오전'
+		const formattedHours = hours % 12 === 0 ? 12 : hours % 12
+		const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes
+		return `${days} ${ampm} ${formattedHours}:${formattedMinutes}`
+	}
+
+	const isUserMessage = message.user.nickname === 'User'
 
 	// 이전 메시지와 다음 메시지가 같은 사용자에 의해 보내졌는지 확인
 	const isPreviousSameUser =
-		previousMessage && previousMessage.sender === message.sender
+		previousMessage && previousMessage.user.nickname === message.user.nickname
 
 	// 다음 메시지가 같은 사용자에 의해 같은 시간에 보내졌는지 확인
 	const isNextSameUserAndTime =
 		nextMessage &&
-		nextMessage.sender === message.sender &&
-		nextMessage.timestamp === message.timestamp
+		nextMessage.user.nickname === message.user.nickname &&
+		formatTimeForComparison(nextMessage.timestamp) ===
+			formatTimeForComparison(message.timestamp)
 
 	// 닉네임과 시간 표시 여부 결정
 	const showNickname = !isUserMessage && !isPreviousSameUser
 	// 다음 메시지가 같은 시간에 같은 사용자에 의해 보내졌는 경우를 제외하고 시간 표시
 	const showTime = !isNextSameUserAndTime
 
-	const profileImagePath = `src/assets/profileImage/${message.profileImage}`
 
 	const formatTime = (timestamp: string): string => {
 		const date = new Date(timestamp)
@@ -42,6 +53,10 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
 		const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes
 		return `${ampm} ${formattedHours}:${formattedMinutes}`
 	}
+
+	//수정: userMypageUrl 고쳐야 합니다 ~~~!
+	const userMyPageUrl = `https://mypage/${message.user.userId}`
+	const profileImagePath = `src/assets/profileImage/${message.user.profileImage}`
 
 	return (
 		<div
@@ -56,12 +71,14 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
 			>
 				{showNickname && (
 					<div className="flex items-center mt-2">
-						<img
-							src={profileImagePath}
-							alt={`${message.sender}'s profile`}
-							className="w-10 h-10 rounded-xl mb-2 mr-2"
-						/>
-						<div className="text-sm text-gray-600 mt-3">{message.sender}</div>
+						<a href={userMyPageUrl} target="_blank" rel="noopener noreferrer">
+							<img
+								src={profileImagePath}
+								alt={`${message.user.nickname}'s profile`}
+								className="w-10 h-10 rounded-xl mb-2 mr-2"
+							/>
+						</a>
+						<div className="text-sm text-gray-600 mt-3">{message.user.nickname}</div>
 					</div>
 				)}
 				<div
