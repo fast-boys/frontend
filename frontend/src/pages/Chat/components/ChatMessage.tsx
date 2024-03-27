@@ -25,16 +25,16 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
 		return `${days} ${ampm} ${formattedHours}:${formattedMinutes}`
 	}
 
-	const isUserMessage = message.user.nickname === 'User'
+	const isUserMessage = message.sender === 'User'
 
 	// 이전 메시지와 다음 메시지가 같은 사용자에 의해 보내졌는지 확인
 	const isPreviousSameUser =
-		previousMessage && previousMessage.user.nickname === message.user.nickname
+		previousMessage && previousMessage.sender === message.sender
 
 	// 다음 메시지가 같은 사용자에 의해 같은 시간에 보내졌는지 확인
 	const isNextSameUserAndTime =
 		nextMessage &&
-		nextMessage.user.nickname === message.user.nickname &&
+		nextMessage.sender === message.sender &&
 		formatTimeForComparison(nextMessage.timestamp) ===
 			formatTimeForComparison(message.timestamp)
 
@@ -55,8 +55,8 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
 	}
 
 	//수정: userMypageUrl 고쳐야 합니다 ~~~!
-	const userMyPageUrl = `https://mypage/${message.user.userId}`
-	const profileImagePath = `src/assets/profileImage/${message.user.profileImage}`
+	const userMyPageUrl = `https://mypage/${message.userId}`
+	const profileImagePath = `src/assets/profileImage/${message.profileImage}`
 
 	return (
 		<div
@@ -74,11 +74,11 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
 						<a href={userMyPageUrl} target="_blank" rel="noopener noreferrer">
 							<img
 								src={profileImagePath}
-								alt={`${message.user.nickname}'s profile`}
+								alt={`${message.sender}'s profile`}
 								className="w-10 h-10 rounded-xl mb-2 mr-2"
 							/>
 						</a>
-						<div className="text-sm text-gray-600 mt-3">{message.user.nickname}</div>
+						<div className="text-sm text-gray-600 mt-3">{message.sender}</div>
 					</div>
 				)}
 				<div

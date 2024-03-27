@@ -22,5 +22,7 @@
       "yarn format:fix"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "socket.io-mock": "^1.3.2"
+  }
 }

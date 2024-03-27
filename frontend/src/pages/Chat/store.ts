@@ -21,17 +21,14 @@ export const useChatStore = create<ChatStore>((set) => ({
 	messages: chatDummyData,
 	addMessage: (userId, content, type = 'text') =>
 		set((state) => {
-
 			// 로그인중인 유저 getCurrentUser 대신
 			// const currentuser = { nickname: 'user', profileImage: 'NoImage.png' }
 
 			const newMessage = {
 				id: state.messages.length + 1,
-				user: {
-					userId,
-					nickname: 'User', //수정: 실제 사용 시 서버에서 가져온 값을 사용
-					profileImage: 'default.jpg', // 실제 사용 시 서버에서 가져온 값을 사용
-				},
+				userId,
+				sender: 'User', //수정: 실제 사용 시 서버에서 가져온 값을 사용
+				profileImage: 'default.jpg', // 실제 사용 시 서버에서 가져온 값을 사용
 				content,
 				timestamp: getTimeStamp(),
 				type,

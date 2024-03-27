@@ -16,7 +16,7 @@ const ChatList: React.FC = () => {
 			// 메시지 추가 함수에 필요한 값만 전달합니다.
 			useChatStore
 				.getState()
-				.addMessage(message.user.userId, message.content, message.type)
+				.addMessage(message.userId, message.content, message.type)
 		}
 
 		socket.socketClient.on('message', handleNewMessage)
