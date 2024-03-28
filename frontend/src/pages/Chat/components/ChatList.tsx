@@ -2,30 +2,16 @@
 
 import React, { useEffect, useRef } from 'react'
 import { useChatStore } from '../store'
-import { ChatMessageType } from '../dummy/ChatDummyData'
-import socket from '../socketMock'
-import ChatMessage from './ChatMessage'
+import ChatMessage from './ChatMessage';
+import { useWebSocketConnect } from '../socket';
+
 
 const ChatList: React.FC = () => {
 	const messages = useChatStore((state) => state.messages)
 	const chatListRef = useRef<HTMLDivElement>(null)
 
-	useEffect(() => {
-		// message는 ChatMessageType 타입입니다.
-		const handleNewMessage = (message: ChatMessageType) => {
-			// 메시지 추가 함수에 필요한 값만 전달합니다.
-			useChatStore
-				.getState()
-				.addMessage(message.userId, message.content, message.type)
-		}
+	useWebSocketConnect(); // WebSocket 연결 사용
 
-		socket.socketClient.on('message', handleNewMessage)
-
-		return () => {
-			socket.socketClient.off('message', handleNewMessage)
-		}
-	}, [])
-	
 	useEffect(() => {
 		if (chatListRef.current) {
 			chatListRef.current.scrollTop = chatListRef.current.scrollHeight
@@ -36,6 +22,24 @@ const ChatList: React.FC = () => {
 			}, 0.0001)
 		}
 	}, [messages])
+
+
+    // useEffect(() => {
+    //     const fetchRecentMessages = async () => {
+    //         // 예시 URL, 실제 API 주소로 변경해야 합니다.
+    //         const response = await fetch('http://192.168.100.167:8082/chat/recent?plan=1');
+    //         if (response.ok) {
+    //             const data = await response.json();
+    //             // 서버에서 받은 데이터를 상태에 추가합니다.
+    //             data.forEach((message: ChatMessageType) => {
+    //                 useChatStore.getState().addMessage(message.userId, message.content, message.type);
+    //             });
+    //         }
+    //     };
+
+    //     fetchRecentMessages();
+    // }, []);
+
 
 	const isDifferentDay = (currentMessageIndex: number): boolean => {
 		if (currentMessageIndex === 0) {
