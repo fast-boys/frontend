@@ -51,7 +51,7 @@ const AddLocationModal = ({ locationId, onClose }: IAddLocationModalProps) => {
 					onClick={onClose}
 				></button>
 			</div>
-			<div className="absolute bottom-0 z-30 bg-white w-full flex flex-col items-center">
+			<div className="absolute bottom-0 z-30 bg-white w-full flex flex-col items-center pt-16 rounded-t-2xl">
 				<h1 className="font-bold text-xl">
 					여행지를 추가할 일정을 <br />
 					선택해주세요!
