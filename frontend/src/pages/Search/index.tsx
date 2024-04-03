@@ -1,36 +1,56 @@
 import SearchHeader from 'src/components/header/SearchHeader'
 import DefaultLayout from 'src/components/layout/DefaultLayout'
-import { getSearchedLocation } from './api'
+import { getAutoCompleteLocation } from './api'
 import {
-	useSearchLocationResultStore,
-	useSearchLocationTextStore,
+	useAutoCompleteResultStore,
+	useAutoCompleteTextStore,
+	useSearchedTextStore,
 } from './store'
 import { useCallback } from 'react'
 import NoSearchResult from './component/NoSearchResult'
 import SearchResultList from './component/SearchResultList'
 
+// Todo: storeSearchedData 부분은 useQuery로 변경 필요
 const Search = () => {
-	const { searchResult, setSearchResult } = useSearchLocationResultStore()
-	const { setSearchText } = useSearchLocationTextStore()
+	const { autoCompleteResult, setAutoCompleteResult } =
+		useAutoCompleteResultStore()
+	const { setAutoCompleteText } = useAutoCompleteTextStore()
+	const { setSearchedText } = useSearchedTextStore()
+	// const { searchResult, setSearchResult } = useSearchResultStore()
 
 	// :: Event Handlers
 	const storeSearchedData = useCallback(
 		async (searchText: string) => {
-			const searchResult = await getSearchedLocation(searchText)
+			const searchResult = await getAutoCompleteLocation(searchText)
 			console.log(searchText, searchResult)
-			setSearchResult(searchResult)
+			setAutoCompleteResult(searchResult)
 		},
-		[setSearchResult]
+		[autoCompleteResult]
 	)
+
+	// const storeSearchResultData = useCallback(
+	// 	async (searchText: string) => {
+	// 		const searchResult = await getSearchedLocation(searchText)
+	// 		console.log(searchText, searchResult)
+	// 		setSearchResult(searchResult)
+	// 	},
+	// 	[searchResult]
+	// )
 
 	return (
 		<DefaultLayout>
 			<SearchHeader
 				placeHolder="여행지를 검색해주세요."
-				setSearchText={setSearchText}
-				storeSearchedData={storeSearchedData}
+				setSearchText={setSearchedText}
+				setAutoCompleteText={setAutoCompleteText}
+				storeAutoCompleteData={storeSearchedData}
+				// storeSearchResultData={storeSearchResultData}
 			/>
-			{searchResult.length === 0 ? <NoSearchResult /> : <SearchResultList />}
+			{autoCompleteResult.length === 0 ? (
+				<NoSearchResult />
+			) : (
+				<SearchResultList />
+			)}
 		</DefaultLayout>
 	)
 }

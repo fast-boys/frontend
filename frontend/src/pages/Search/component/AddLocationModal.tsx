@@ -94,8 +94,8 @@ const AddLocationModal = ({ locationId, onClose }: IAddLocationModalProps) => {
 				</div>
 				<button
 					className={
-						'absolute bottom-0 w-full py-4 font-bold text-white bg-green1 cursor-not-allowed ' +
-						(isDisabled && 'opacity-50')
+						'absolute bottom-0 w-full py-4 font-bold text-white bg-green1' +
+						(isDisabled && ' cursor-not-allowed opacity-50')
 					}
 					onClick={handleAddLocation}
 					disabled={isDisabled}

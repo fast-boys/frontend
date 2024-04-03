@@ -10,7 +10,7 @@ interface SearchResultItemProps {
 // Todo: 초성 하이라이트 기능 도입하기(생각보다 난이도가 높을 것으로 예상됨)
 const SearchResultItem = ({ resultItem }: SearchResultItemProps) => {
 	return (
-		<li className="flex items-center justify-between">
+		<>
 			<Link
 				to={`/location/${resultItem.spot_id}`}
 				className="flex items-center flex-1"
@@ -32,7 +32,7 @@ const SearchResultItem = ({ resultItem }: SearchResultItemProps) => {
 				</div>
 			</Link>
 			<LocationSelectButton locationId={resultItem.spot_id} />
-		</li>
+		</>
 	)
 }
 

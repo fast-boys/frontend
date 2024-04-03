@@ -10,20 +10,23 @@ import { IoArrowBackOutline } from 'react-icons/io5'
 // Todo: handleSearch props 이름을 storeSearchedData로 변경하기
 export interface HeaderProps {
 	placeHolder: string
+	setAutoCompleteText: (text: string) => void
+	storeAutoCompleteData: (searchText: string) => Promise<void>
 	setSearchText: (text: string) => void
-	storeSearchedData: (searchText: string) => Promise<void>
+	storeSearchResultData?: (searchText: string) => void
 }
 
 const SearchHeader = ({
 	placeHolder,
 	setSearchText,
-	storeSearchedData,
+	setAutoCompleteText,
+	storeAutoCompleteData,
 }: HeaderProps) => {
 	const { goBack } = useRouter()
 
 	// :: Functions
 	const StoreSearchedResultWithDebounce = debounce(async (text: string) => {
-		await storeSearchedData(text)
+		await storeAutoCompleteData(text)
 	}, 500)
 
 	// :: Event Handlers
@@ -32,8 +35,15 @@ const SearchHeader = ({
 	}
 	const handleChangeInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const inputText = e.currentTarget.value
-		setSearchText(inputText)
+		setAutoCompleteText(inputText)
 		StoreSearchedResultWithDebounce(inputText)
+	}
+	const handlePressEnter = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === 'Enter') {
+			const inputText = e.currentTarget.value
+			setSearchText(inputText)
+			setAutoCompleteText('')
+		}
 	}
 
 	return (
@@ -46,6 +56,7 @@ const SearchHeader = ({
 				type="text"
 				placeholder={placeHolder}
 				onChange={handleChangeInput}
+				onKeyDown={handlePressEnter}
 				className="w-full py-2 font-medium focus:outline-none text-darkGray2"
 			/>
 		</div>

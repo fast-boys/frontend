@@ -7,6 +7,8 @@ interface SearchLocationInfo {
 	name: string
 	address: string
 	image_url: string | null
+	lat?: string
+	long?: string
 }
 
 interface SelectDayType {
