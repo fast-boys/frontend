@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite'
 import checker from 'vite-plugin-checker'
 import react from '@vitejs/plugin-react'
-import svgr from '@svgr/rollup'
-// import fs from 'fs'
+import svgr from 'vite-plugin-svgr'
+import fs from 'fs'
 import { VitePWA } from 'vite-plugin-pwa'
 
 // import ViteSvgSpriteWrapper from 'vite-svg-sprite-wrapper'
@@ -12,6 +12,7 @@ export default defineConfig({
 	plugins: [
 		react(),
 		checker({ typescript: true }),
+		// https://react-svgr.com/docs/rollup-plugin/
 		svgr(),
 		// ViteSvgSpriteWrapper({
 		// 	// sprite 이미지 만들 입력 폴더
@@ -49,10 +50,10 @@ export default defineConfig({
 			src: '/src',
 		},
 	},
-	// server: {
-	// 	https: {
-	// 		key: fs.readFileSync('C:/Users/SSAFY/localhost-key.pem'),
-	// 		cert: fs.readFileSync('C:/Users/SSAFY/localhost.pem'),
-	// 	},
-	// },
+	server: {
+		https: {
+			key: fs.readFileSync('D:/localhost-key.pem'),
+			cert: fs.readFileSync('D:/localhost.pem'),
+		},
+	},
 })

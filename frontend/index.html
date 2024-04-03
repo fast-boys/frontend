@@ -15,15 +15,18 @@
 		<script type="module" src="/src/main.tsx"></script>
 		<script>
 			if ('serviceWorker' in navigator) {
-				window.addEventListener('load', () => {
-					navigator.serviceWorker
-						.register('/sw.js', { scope: '/' })
-						.then((registration) => {
-							console.log('SW registered: ', registration)
-						})
-						.catch((registrationError) => {
-							console.log('SW registration failed: ', registrationError)
-						})
+				window.addEventListener('load', function () {
+					navigator.serviceWorker.register('/dist/sw.js').then(
+						function (registration) {
+							console.log(
+								'ServiceWorker registration successful with scope: ',
+								registration.scope
+							)
+						},
+						function (err) {
+							console.log('ServiceWorker registration failed: ', err)
+						}
+					)
 				})
 			}
 		</script>

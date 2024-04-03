@@ -20,6 +20,7 @@ import TravelDetail from './pages/TravelDetail'
 import TravelCreate from './pages/TravelCreate'
 import UrlResultDummy from './pages/UrlBook/components/UrlResultDummy'
 import UrlResult from './pages/UrlBook/components/UrlResult'
+import PWATest from './pages/PWATest'
 
 // Router와 관련된 데이터를 관리하는 객체의 타입
 interface IRouterBase {
@@ -133,6 +134,7 @@ const routerData: RouterElement[] = [
 		label: 'chat',
 	},
 	{ path: '*', element: <NotFound />, label: 'notFound' },
+	{ path: '/test', element: <PWATest />, label: 'pwatest' },
 ]
 
 const router: RemixRouter = createBrowserRouter(
