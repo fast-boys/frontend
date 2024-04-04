@@ -3,7 +3,11 @@ import { useUrlStore } from '../store'
 import { IUrlItem } from '../types'
 import { fetchUrlInfo } from '../api'
 import useSingleUrlDelete from '../hooks/useSingleUrlDelete'
-import { FailOption, LoadingPlaneOption } from 'src/assets/lottie/LottieOptions'
+import {
+	FailOption,
+	LoadingPlaneOption,
+	NoImageOption,
+} from 'src/assets/lottie/LottieOptions'
 import Lottie from 'react-lottie'
 
 interface IUrlItemWithIndex extends IUrlItem {
@@ -14,15 +18,19 @@ const UrlItem: React.FC<IUrlItemWithIndex> = ({ url_id }) => {
 	const urlItem = useUrlStore((state) =>
 		state.urls.find((url) => url.url_id === url_id)
 	)
-	const { toggleCheck, sendingUrls } = useUrlStore()
+	const { toggleCheck, sendingUrls, completed_urls } = useUrlStore()
 	const [details, setDetails] = useState<IUrlItem | null>(null)
 	// const isSending = sendingUrls.includes(url_id);
+	const [imageError, setImageError] = useState(false) // 이미지 로딩 실패 여부를 추적하는 상태
+
+
+
 	const isSendingWithoutTrue =
 		sendingUrls.includes(url_id) && urlItem?.status !== 'True'
 	useEffect(() => {
 		const fetchData = async () => {
 			const data = await fetchUrlInfo(url_id)
-			console.log(data) // 실제 제품에서는 로그를 제거해야 합니다.
+			// console.log(data) // 실제 제품에서는 로그를 제거해야 합니다.
 			setDetails(data)
 		}
 		fetchData()
@@ -40,14 +48,18 @@ const UrlItem: React.FC<IUrlItemWithIndex> = ({ url_id }) => {
 	}
 
 	const { handleDelete } = useSingleUrlDelete()
-	const onClickDelete = () => handleDelete(url_id)
+	const onClickDelete = async () => {
+		await handleDelete(url_id)
+		// 삭제가 성공적으로 완료된 후, removeCompletedUrl 호출하여 스토어에서 해당 URL을 제거합니다.
+		console.log(completed_urls)
+	}
 
 	return (
 		<div className="flex px-3 py-1 items-center bg-white rounded shadow mb-2">
 			{urlItem?.error ? (
-				<Lottie options={FailOption} height={24} width={20} />
+				<Lottie options={FailOption} height={20} width={20} />
 			) : isSendingWithoutTrue ? (
-				<Lottie options={LoadingPlaneOption} height={60} width={30} />
+				<Lottie options={LoadingPlaneOption} height={60} width={20} />
 			) : urlItem?.status === 'None' ? (
 				<input
 					type="checkbox"
@@ -59,14 +71,16 @@ const UrlItem: React.FC<IUrlItemWithIndex> = ({ url_id }) => {
 			{/* Thumbnail */}
 			{details && (
 				<div className="w-16 h-16 flex justify-center rounded ml-2 overflow-hidden">
-					<img
-						src={details.image}
-						onError={(e) =>
-							(e.currentTarget.src = '../src/assets/mushroom-green.gif')
-						}
-						alt="URL thumbnail"
-						className="object-cover h-full"
-					/>
+					{!imageError ? (
+						<img
+							src={details.image}
+							onError={() => setImageError(true)} // 이미지 로딩 실패 시 imageError 상태를 true로 설정
+							alt="Url thumbnail"
+							className="object-cover h-full"
+						/>
+					) : (
+						<Lottie options={NoImageOption} /> // 이미지 로딩 실패 시 Lottie 애니메이션 출력
+					)}
 				</div>
 			)}
 			{/* Content */}

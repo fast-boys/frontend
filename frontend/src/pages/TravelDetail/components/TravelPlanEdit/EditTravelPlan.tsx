@@ -12,9 +12,11 @@ import { putTravelDetail } from "../../api"
 
 interface EditTravelPlanProps {
     toggleIsEdit: () => void
+    cityLat: number;
+    cityLong: number;
 }
 
-const EditTravelPlan = ({toggleIsEdit}: EditTravelPlanProps) => {
+const EditTravelPlan = ({toggleIsEdit, cityLat, cityLong}: EditTravelPlanProps) => {
     const {id} = useParams()
     const router = useRouter()
     const {plan, currentDay, setCurrentDay} = usePlanStore()
@@ -196,7 +198,7 @@ const EditTravelPlan = ({toggleIsEdit}: EditTravelPlanProps) => {
     return (
         <div>
             <div className="sticky top-[60px] z-30" ref={headerRef}>
-                <MapSpace day={currentDay} plan={state} />
+                <MapSpace day={currentDay} plan={state} cityLat={cityLat} cityLong={cityLong} />
                 <div className="pl-4 pr-6 h-10 flex justify-between items-center bg-white">
                     <div>
                         <span className="text-sm font-semibold mr-2">day {visibleDay ? visibleDay : currentDay}</span>
@@ -233,7 +235,7 @@ const EditTravelPlan = ({toggleIsEdit}: EditTravelPlanProps) => {
                     </div>
                 </DragDropContext>
             </div>
-            <div className="fixed bottom-0 h-11 w-full z-20 bg-green3 text-white px-[52px] flex justify-between items-center">
+            <div className="fixed bottom-[60px] h-11 w-full z-20 bg-green3 text-white px-[52px] flex justify-between items-center">
                 <button className="flex">
                     <LuArrowUpDown />
                     <span className="text-xs">날짜 이동</span>

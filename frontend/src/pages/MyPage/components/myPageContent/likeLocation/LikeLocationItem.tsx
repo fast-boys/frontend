@@ -10,22 +10,19 @@ interface ILikeLocationItemProps {
 const LikeLocationItem = ({ locationInfo }: ILikeLocationItemProps) => {
 	return (
 		<div>
-			{locationInfo.locationImage ? (
-				<div className="w-full aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
+			<div className="w-full aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
+				{locationInfo.locationImage ? (
 					<img
 						src={locationInfo.locationImage}
 						alt={locationInfo.locationName}
 					/>
-				</div>
-			) : (
-				<DefaultLocation className="w-full h-[148px] rounded-lg " />
-			)}
+				) : (
+					<DefaultLocation />
+				)}
+			</div>
 
 			<LikeLocationItemInfo locationInfo={locationInfo} />
-			<MemoButton
-				locationId={locationInfo.locationId}
-				locationMemo={locationInfo.locationMemo}
-			/>
+			<MemoButton locationId={locationInfo.locationId} />
 		</div>
 	)
 }

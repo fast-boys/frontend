@@ -1,23 +1,31 @@
 // src/pages/UrlBook/api.ts
 
 import axios from 'axios'
-const BASE_URL = 'http://j10d204.p.ssafy.io:8000'
+const BASE_URL = 'https://j10d204.p.ssafy.io/api/core'
 
 export const fetchUrlList = async () => {
-	const response = await axios.get(`${BASE_URL}/url/list`, {
-		headers: { Accept: 'application/json',
-		INTERNAL_ID_HEADER: '8b5b03b7-ae9f-458e-a2b9-558eac541629',
-	},
-	})
-	return response.data
-}
+	try {
+	  const response = await axios.get(`${BASE_URL}/url/list`, {
+		headers: { Accept: 'application/json' },
+		withCredentials: true,
+	  });
+	  return response.data;
+	} catch (error) {
+	  if (axios.isAxiosError(error) && error.response?.status === 404) {
+		// 404 오류 발생 시 빈 배열 반환
+		return [];
+	  }
+	  // 그 외의 오류는 여전히 던져짐
+	  throw error;
+	}
+  };
 
 export const fetchUrlInfo = async (url_id: number) => {
 	const response = await axios.get(`${BASE_URL}/url/info?url_id=${url_id}`, {
 		headers: {
 			Accept: 'application/json',
-			INTERNAL_ID_HEADER: '8b5b03b7-ae9f-458e-a2b9-558eac541629',
 		},
+		withCredentials: true,
 	})
 	return response.data
 }
@@ -27,8 +35,8 @@ export const fetchUrlResults = async (url_id: number) => {
 	return axios.get(`${BASE_URL}/url/result/${url_id}`, {
 		headers: {
 			Accept: 'application/json',
-			INTERNAL_ID_HEADER: '8b5b03b7-ae9f-458e-a2b9-558eac541629',
 		},
+		withCredentials: true,
 	})
 }
 
@@ -37,6 +45,7 @@ export const deleteUrl = async (urlId: number) => {
 		headers: {
 			Accept: 'application/json',
 		},
+		withCredentials: true,
 	})
 }
 
@@ -45,11 +54,10 @@ export const addUrl = async (newUrl: string) => {
 		params: { target_url: newUrl },
 		headers: {
 			Accept: 'application/json',
-			INTERNAL_ID_HEADER: '8b5b03b7-ae9f-458e-a2b9-558eac541629',
 		},
+		withCredentials: true,
 	})
 }
-
 
 export const calculateUrl = async (urlId: number) => {
 	return axios.put(
@@ -59,6 +67,7 @@ export const calculateUrl = async (urlId: number) => {
 			headers: {
 				accept: 'application/json',
 			},
+			withCredentials: true,
 		}
 	)
 }

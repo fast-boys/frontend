@@ -7,15 +7,18 @@ export const useUrlStore = create<UrlStore>((set) => ({
 	urls: [], // types.ts에서 타입 선언해놨습니다~
 	completed_urls: [], // SSE로 확인하고 status:True가 된urls 저장하고싶어요~
 	sendingUrls: [], // 전송 중인 URL의 ID를 저장하는 배열
-	refreshTrigger: false,
-	triggerRefresh: () =>
-		set((state) => ({ ...state, refreshTrigger: !state.refreshTrigger })),
 
 	removeUrl: (urlId) =>
 		set((state) => ({
 			urls: state.urls.filter((url) => url.url_id !== urlId),
 		})), // 특정 URL을 제거하는 로직
-
+		
+	removeCompletedUrl: (urlId) =>
+		set((state) => ({
+			completed_urls: state.completed_urls.filter(
+				(url) => url.url_id !== urlId
+			),
+		})),
 	setUrls: (newUrls) => {
 		set(() => ({ urls: newUrls }))
 	},
@@ -51,7 +54,7 @@ export const useUrlStore = create<UrlStore>((set) => ({
 		// 로그확인용
 		set((state) => {
 			const updatedCompletedUrls = [...state.completed_urls, urlItem]
-			console.log('완료URL추가중 : ', updatedCompletedUrls)
+			// console.log('완료URL추가중 : ', updatedCompletedUrls)
 			return { completed_urls: updatedCompletedUrls }
 		})
 	},

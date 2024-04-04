@@ -18,7 +18,6 @@ import Survey from './pages/Survey'
 import Chat from './pages/Chat'
 import TravelDetail from './pages/TravelDetail'
 import TravelCreate from './pages/TravelCreate'
-import UrlResultDummy from './pages/UrlBook/components/UrlResultDummy'
 import UrlResult from './pages/UrlBook/components/UrlResult'
 import PWATest from './pages/PWATest'
 
@@ -96,11 +95,6 @@ const routerData: RouterElement[] = [
 	{
 		path: '/urlbook',
 		element: <UrlBook />,
-		label: 'urlBook',
-	},
-	{
-		path: '/urlbook/resultdummy',
-		element: <UrlResultDummy />,
 		label: 'urlBook',
 	},
 	{
