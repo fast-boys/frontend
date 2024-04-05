@@ -86,6 +86,7 @@ const EditProfile = ({
 	// :: Event handler
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
+		event.stopPropagation()
 
 		// make formdata &&  select api function
 		const profileFormData = new FormData(event.currentTarget)
